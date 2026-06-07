@@ -1,2 +1,2 @@
 # Wallpaper Editor Scripts
-Scripts to Wallpaper Editor from Wallpaper Engine
+My personal libraby with scripts to Wallpaper Editor from Wallpaper Engine
