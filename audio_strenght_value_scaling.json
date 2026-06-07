@@ -1,0 +1,25 @@
+'use strict';
+
+//bind this script into parameter with strenght value
+
+const audioBuffer = engine.registerAudioBuffers(engine.AUDIO_RESOLUTION_16);
+
+const SMOOTHING_RATE = 10;   // than small rate than smoohtly react
+const REACTIVITY     = 1.0;  // strength of scaling
+
+let defaultStrength;      
+let smoothVolume = 0;
+
+export function init(value) {
+	defaultStrength = value;  // set default value as 0 to remove effect as default
+	return value;
+}
+
+export function update(value) {
+	let target = audioBuffer.average[0];   // getting bass buffer
+
+	smoothVolume += (target - smoothVolume) * SMOOTHING_RATE * engine.frametime;
+	smoothVolume = Math.min(smoothVolume, 1.0);
+
+	return defaultStrength + smoothVolume * REACTIVITY;
+}
