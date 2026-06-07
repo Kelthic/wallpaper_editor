@@ -1,0 +1,32 @@
+'use strict';
+
+// bind this script into "scale" of object
+
+const audioBuffer = engine.registerAudioBuffers(engine.AUDIO_RESOLUTION_16);
+
+const SMOOTHING_RATE = 15;   // than small rate than smoohtly react
+const REACTIVITY     = 1.0;  // strength of scaling
+
+let defaultScale;
+let smoothVolume = 0;
+
+export function init(value) {
+	defaultScale = value;
+	return value;
+}
+
+export function update(value) {
+	// getting bass buffer
+	let target = audioBuffer.average[0];
+
+	// smooth interpolation on FPS base
+	smoothVolume += (target - smoothVolume) * SMOOTHING_RATE * engine.frametime;
+
+	// scale limit
+	smoothVolume = Math.min(smoothVolume, 1.0);
+
+	value.x = defaultScale.x + smoothVolume * REACTIVITY;
+	value.y = defaultScale.y + smoothVolume * REACTIVITY;
+	value.z = defaultScale.z + smoothVolume * REACTIVITY;
+	return value;
+}
