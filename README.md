@@ -1,2 +1,2 @@
-# wallpaper_editor
-Scripts to Wallpaper Editor
+# Wallpaper Editor Scripts
+Scripts to Wallpaper Editor from Wallpaper Engine
